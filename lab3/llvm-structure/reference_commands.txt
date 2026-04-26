@@ -1,0 +1,15 @@
+Building the project
+
+Configure cmake(advcmp/build directory will be created)
+cmake-S . -G Ninja -B build
+
+Build
+cmake--build build
+
+Testing the project
+
+IR generation
+clang -S -O0 -emit-llvm-Xclang-disable-O0-optnone -fno-discard-value-names test.c-o test.ll
+
+Run your own InstructionCounterpass
+opt -S -load-pass-plugin='build/lib/libInstructionCounter.so' -passes='instruction-counter' test.ll-disable-output 2> test.out
